@@ -193,11 +193,38 @@ Include screenshots in the GitHub repository showing:
 
 The current project evidence includes:
 
-- `mlflow_experiment_1.png` — baseline MLflow run.
-- `mlflow_experiment_2.png` — lower-learning-rate MLflow run.
-- `streamlit_app_1.png`
-- `streamlit_app_2.png`
-- `streamlit_app_3.png`
+
+## 9. Screenshots and Evidence
+
+### MLflow Training Experiments
+
+**Run 1 – Baseline Experiment**
+
+![MLflow Experiment 1](screenshots/mlflow_experiment_1.png)
+
+**Run 2 – Lower Learning Rate**
+
+![MLflow Experiment 2](screenshots/mlflow_experiment_2.png)
+
+**Additional MLflow Evidence**
+
+![MLflow Experiment 3](screenshots/mlflow_experiment_3.png)
+
+![MLflow Experiment 4](screenshots/mlflow_experiment_4.png)
+
+### Streamlit Application
+
+**Prediction Example 1**
+
+![Streamlit Prediction 1](screenshots/streamlit_app_1.png)
+
+**Prediction Example 2**
+
+![Streamlit Prediction 2](screenshots/streamlit_app_2.png)
+
+**Prediction Example 3**
+
+![Streamlit Prediction 3](screenshots/streamlit_app_3.png)
 
 
 
