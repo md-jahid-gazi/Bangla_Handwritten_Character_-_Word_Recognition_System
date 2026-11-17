@@ -1,1 +1,1 @@
-https://github.com/YOUR_USERNAME/YOUR_REPOSITORY
+https://github.com/md-jahid-gazi/Bangla_Handwritten_Character_-_Word_Recognition_System
