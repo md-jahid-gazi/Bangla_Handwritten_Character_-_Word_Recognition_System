@@ -38,87 +38,141 @@ The current training configuration recorded in MLflow used:
 
 Keep `labels.json` and the class-to-Unicode mapping used by the application consistent with the trained model. Do not infer Bengali Unicode labels from numeric folder names unless the mapping has been verified.
 
-## 3. Approach and implementation
+## 3. Project Structure
 
-### Model
-
-- Architecture: 3-block Convolutional Neural Network (CNN)
-- Input size: 64 × 64
-- Output classes: 84
-- Dataset: BanglaLekha-Isolated
-
-The CNN is trained to classify isolated Bangla character images. The application processes a user's handwritten input, predicts character classes, maps them to Bengali Unicode, and displays a joined Unicode string.
-
-**Important limitation:** BanglaLekha-Isolated is an isolated-character dataset. It does not, by itself, provide complete handwritten-word samples and word-level transcriptions. Therefore, character classification followed by segmentation and concatenation is a baseline approach, not an end-to-end word-recognition model. Segmentation and character mapping can fail on connected handwriting, vowel signs (কার), conjuncts (যুক্তবর্ণ), phala, and touching strokes. The displayed complete word is the application's predicted output; it should not be presented as guaranteed correct recognition.
-
-## 4. Project files
-
-The assignment requires the following files in the GitHub project:
+The following is the recommended local project structure. The actual extracted dataset folder name may differ.
 
 ```text
-bangla-ocr-assignment/
-├── train.py
+Bangla_OCR_Assignment04/
+│
 ├── app.py
+├── train.py
 ├── requirements.txt
-├── Dockerfile
 ├── README.md
+├── Dockerfile
+├── .dockerignore
+├── .gitignore
+├── github_link.txt
+│
 ├── labels.json
+├── unicode_map.json
+├── class_mapping.csv
+├── class_contact_sheet.png
+│
+├── data/                         # Download and extract dataset here
+│   └── BanglaLekha-Isolated/
+│       └── [dataset files]
+│
 ├── models/
-│   └── model.keras
+│   └── model.keras               # Generated/saved trained model
+│
 ├── artifacts/
-│   └── mlflow/
-└── screenshots/
-    ├── streamlit_app.png
-    └── mlflow_experiment.png
+│   └── mlflow/                   # MLflow tracking data, if configured here
+│
+├── mlflow/                       # Optional local MLflow database folder
+├── mlruns/                       # Optional local MLflow tracking folder
+│
+├── notebooks/
+│   └── Bangla_OCR_Assignment04.ipynb
+│
+├── screenshots/
+│   ├── mlflow_experiment_1.png
+│   ├── mlflow_experiment_2.png
+│   ├── mlflow_experiment_3.png
+│   ├── mlflow_experiment_4.png
+│   ├── streamlit_app_1.png
+│   ├── streamlit_app_2.png
+│   └── streamlit_app_3.png
+│
+├── tools/
+│   └── [supporting scripts]
+│
+└── .venv/                         # Local Python environment; do not upload
 ```
 
-The screenshots folder may contain multiple experiment and application screenshots. The source-code ZIP submitted for the assignment must follow the source-only exclusion rules in Section 10.
+Only include files and screenshots that actually exist in your repository. Remove example entries from this tree if you do not have those files.
 
-## 5. Environment setup
+## 4. Environment Setup (WSL / Ubuntu)
 
-Create and activate a Python virtual environment:
+Open a WSL terminal and go to the project directory:
 
 ```bash
-python -m venv .venv
+cd ~/Bangla_OCR_Assignment04
 ```
 
-Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-Linux / WSL:
+Install Python virtual-environment support if needed:
 
 ```bash
+sudo apt update
+sudo apt install python3-venv python3-pip -y
+```
+
+Create and activate the virtual environment:
+
+```bash
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Install dependencies:
+Upgrade pip and install the project dependencies:
 
 ```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-## 6. Train the model and record MLflow experiments
-
-Run the training script from the project root:
+For running the Jupyter notebook using this environment:
 
 ```bash
+python -m pip install ipykernel
+python -m ipykernel install --user --name bangla-ocr --display-name "Python (Bangla OCR)"
+```
+
+In VS Code, open the notebook and select **Python (Bangla OCR)** as its kernel.
+
+## 5. Verify the Dataset Folder
+
+After extracting the dataset, check the `data/` directory:
+
+```bash
+cd ~/Bangla_OCR_Assignment04
+ls -lah data/
+find data/ -maxdepth 2 -type d | head -30
+```
+
+If the extracted dataset is nested in an additional folder, locate the directory that contains the class folders and configure `train.py` to use that directory.
+
+Do not assume that the dataset path is `data/BanglaLekha-Isolated/` until you have checked the extracted archive.
+
+## 6. Train the Model
+
+Before training:
+
+- Confirm that the dataset has been downloaded and extracted under `data/`.
+- Confirm that the dataset path in `train.py` points to the correct directory.
+- Confirm that the class labels and Unicode mapping correspond to the model's output classes.
+
+Run training from the project root:
+
+```bash
+cd ~/Bangla_OCR_Assignment04
+source .venv/bin/activate
 python train.py
 ```
 
-Running `train.py` must train the model and record the experiment in MLflow.
+The training script should save the model and any required label files to the paths configured in `train.py`.
 
-The project has two completed MLflow runs captured in the supplied screenshots.
+## 7. MLflow Experiment Tracking
 
-### Actual MLflow experiment results
+The supplied MLflow screenshots show two completed training runs.
+
+### Actual recorded experiment comparison
 
 | Field | Run 1: `experiment_1_baseline` | Run 2: `experiment_2_lower_learning_rate` |
 |---|---:|---:|
 | Status | FINISHED | FINISHED |
-| Dataset | 116,273 train + 24,916 validation | 116,273 train + 24,916 validation |
+| Training images | 116,273 | 116,273 |
+| Validation images | 24,916 | 24,916 |
 | Model architecture | 3-block CNN | 3-block CNN |
 | Image size | 64 × 64 | 64 × 64 |
 | Number of classes | 84 | 84 |
@@ -130,57 +184,70 @@ The project has two completed MLflow runs captured in the supplied screenshots.
 | Validation loss | 0.5919 | 0.6648 |
 | Validation accuracy | 83.79% | 82.12% |
 
-**Result interpretation:** Run 1 achieved the higher validation accuracy (83.79%) and lower validation loss (0.5919). Run 2 used a lower learning rate and more epochs, but its recorded validation accuracy was lower (82.12%). These values are transcribed from the supplied MLflow screenshots.
+**Observation:** Run 1 achieved higher validation accuracy (83.79%) and lower validation loss (0.5919) than Run 2. Run 2 used a lower learning rate and more epochs, but its recorded validation metrics were lower. These values are transcribed from the supplied MLflow screenshots.
 
 ### Start the MLflow UI
 
-From the project directory, run:
+Use the same tracking URI/store configured in `train.py` or the notebook. For example, if the project uses the local file-based directory `artifacts/mlflow`, start the UI with:
 
 ```bash
-mlflow ui --host 0.0.0.0 --port 5000
+cd ~/Bangla_OCR_Assignment04
+source .venv/bin/activate
+mkdir -p artifacts/mlflow
+mlflow ui --backend-store-uri ./artifacts/mlflow --host 0.0.0.0 --port 5000
 ```
 
-Open the MLflow interface at:
+Open:
 
 [http://localhost:5000](http://localhost:5000)
 
-The MLflow UI must use the same tracking store configured in `train.py`. If the code sets a custom tracking URI, start the UI against that same store.
+If your code uses a SQLite tracking URI or another tracking directory, change the UI command to use that exact same store. Do not point the UI to a different tracking store, or the experiment runs may not appear.
 
-## 7. Run the Streamlit application
+At least two successful MLflow training runs are required. The supplied screenshots show two runs with `FINISHED` status.
 
-Run:
+## 8. Run the Streamlit Application
+
+Open another WSL terminal:
 
 ```bash
+cd ~/Bangla_OCR_Assignment04
+source .venv/bin/activate
 streamlit run app.py
-```
-
-Open the application at:
-
-[http://localhost:8501](http://localhost:8501)
-
-Draw one Bangla word in the canvas and select **Predict Unicode**. The application should display the predicted complete joined Bangla Unicode word.
-
-The screenshots in `screenshots/` provide examples of the application's prediction interface and output. Screenshots are evidence of the displayed examples; they do not prove that all handwriting styles or words will be recognized correctly.
-
-## 8. Docker build and run
-
-Build the Docker image using the assignment's image tag:
-
-```bash
-docker build -t bangla-ocr-app:0.1 .
-```
-
-Run the container:
-
-```bash
-docker run -p 8501:8501 bangla-ocr-app:0.1
 ```
 
 Open:
 
 [http://localhost:8501](http://localhost:8501)
 
-Ensure the Dockerfile installs the required dependencies, exposes port `8501`, and starts the Streamlit application. The application must have access to the model and mapping files it needs at runtime. Do not include the dataset in the source-only submission ZIP.
+Write from left to right, leave a small gap between characters when possible, and click **Predict Unicode**. The application should display the predicted joined Bengali Unicode output.
+
+The output is a prediction and may be incorrect. The current isolated-character model and segmentation approach have the limitations described above.
+
+## 9. Docker Build and Run
+
+Docker image names must be lowercase. Use this image name based on the project title:
+
+```text
+bangla_handwritten_character_word_recognition_system
+```
+
+Build from the project root:
+
+```bash
+docker build -t bangla_handwritten_character_word_recognition_system .
+```
+
+Run the container:
+
+```bash
+docker run --rm -p 8501:8501 bangla_handwritten_character_word_recognition_system
+```
+
+Open:
+
+[http://localhost:8501](http://localhost:8501)
+
+Make sure the `Dockerfile` installs the dependencies, exposes port `8501`, and starts `app.py` with Streamlit. The container must have access to the model and mapping files required by the application.
 
 ## 9. Screenshots:
 
