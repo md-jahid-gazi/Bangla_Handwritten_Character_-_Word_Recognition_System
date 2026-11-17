@@ -4,7 +4,7 @@
 **Student ID:** 1000128068  
 **Program:** Skills for Industry Competitiveness and Innovation Program (SICIP)  
 **Institution:** BRAC University  
-** Bangla Handwritten Word Recognition System  
+**Bangla Handwritten Word Recognition System**
 **Deadline:** 17 November 2026
 
 ---
@@ -18,7 +18,6 @@ The application must accept a handwritten Bangla word and display the predicted 
 Examples of the required output:
 
 | Handwritten input | Expected output |
-|---|---|
 
 | জল | জল |
 
