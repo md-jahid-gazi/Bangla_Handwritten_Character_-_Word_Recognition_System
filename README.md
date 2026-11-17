@@ -286,7 +286,10 @@ Include screenshots in the GitHub repository showing:
 
 ![Streamlit Prediction 3](screenshots/streamlit_app_3.png)
 
+**After Docker Build**
+after_docker_build.png
 
+![After Docker Build](screenshots/after_docker_build.png)
 
 ## 11. GitHub repository: 
 
