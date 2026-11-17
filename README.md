@@ -234,13 +234,13 @@ bangla_handwritten_character_word_recognition_system
 Build from the project root:
 
 ```bash
-docker build -t bangla_handwritten_character_word_recognition_system .
+sudo docker build -t bangla_handwritten_character_word_recognition_system .
 ```
 
 Run the container:
 
 ```bash
-docker run --rm -p 8501:8501 bangla_handwritten_character_word_recognition_system
+sudo docker run --rm -p 8501:8501 bangla_handwritten_character_word_recognition_system
 ```
 
 Open:
