@@ -90,7 +90,7 @@ Bangla_OCR_Assignment04/
 └── .venv/                         # Local Python environment; do not upload
 ```
 
-Only include files and screenshots that actually exist in your repository. Remove example entries from this tree if you do not have those files.
+
 
 ## 4. Environment Setup (WSL / Ubuntu)
 
@@ -163,8 +163,6 @@ python train.py
 The training script should save the model and any required label files to the paths configured in `train.py`.
 
 ## 7. MLflow Experiment Tracking
-
-The supplied MLflow screenshots show two completed training runs.
 
 ### Actual recorded experiment comparison
 
