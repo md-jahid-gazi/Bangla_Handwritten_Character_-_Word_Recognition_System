@@ -5,7 +5,7 @@
 **Program:** Skills for Industry Competitiveness and Innovation Program (SICIP)  
 **Institution:** BRAC University  
 **Bangla Handwritten Word Recognition System**
-**Deadline:** 17 November 2026
+
 
 ---
 
