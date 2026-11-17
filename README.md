@@ -191,11 +191,6 @@ Include screenshots in the GitHub repository showing:
 - The MLflow experiment page with at least two training runs.
 - The Streamlit page with a handwritten Bangla word and its predicted complete Bangla Unicode output.
 
-The current project evidence includes:
-
-
-## 9. Screenshots and Evidence
-
 ### MLflow Training Experiments
 
 **Run 1 – Baseline Experiment**
