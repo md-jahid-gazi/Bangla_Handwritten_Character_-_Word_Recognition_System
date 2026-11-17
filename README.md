@@ -21,7 +21,6 @@ Examples of the required output:
 
 |        জল        |      জল        |
 
-Displaying only separate character predictions without producing the joined word does not satisfy the whole-word output requirement.
 
 ## 2. Dataset
 
