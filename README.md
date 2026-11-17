@@ -19,7 +19,7 @@ Examples of the required output:
 
 | Handwritten input | Expected output |
 |---|---|
-| মানুষ | মানুষ |
+
 | জল | জল |
 
 Displaying only separate character predictions without producing the joined word does not satisfy the whole-word output requirement.
