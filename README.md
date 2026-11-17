@@ -188,7 +188,8 @@ streamlit run app.py --server.address=0.0.0.0 --server.port=8501
 
 Do not claim Docker support is verified until the image has been built and the running container has been tested.
 
-## 10. Required Screenshots
+## 10.
+Screenshots
 
 Save genuine screenshots in the `screenshots/` directory:
 
