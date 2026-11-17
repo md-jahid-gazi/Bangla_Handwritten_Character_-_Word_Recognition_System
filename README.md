@@ -192,8 +192,8 @@ Do not claim Docker support is verified until the image has been built and the r
 
 Save genuine screenshots in the `screenshots/` directory:
 
-- `streamlit_app.png` — Streamlit page displaying a predicted Bangla word.
-- `mlflow_experiment.png` — MLflow experiment page showing at least two training runs.
+- `streamlit_app_1.png` — Streamlit page displaying a predicted Bangla word.
+- `mlflow_experiment_1.png` — MLflow experiment page showing at least two training runs.
 
 ## 11. Suggested Repository Structure
 
